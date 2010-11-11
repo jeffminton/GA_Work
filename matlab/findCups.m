@@ -8,23 +8,23 @@ function [bwf img ccObjs centDat] = findCups(vid, cbAvg, crAvg)
     offset = 10;
     img = img(190:end,:,:);
     
-    [h w depth] = size(img);
     imy = rgb2ycbcr(img);
-
-    %figure, imshow(imy);
-    bw = im2bw(img);
-    bw = xor(bw,bw);
-    %figure, imshow(bw);
-    bwb = ~bw;
-    for r = 1:h
-        for c = 1:w
-            if (imy(r,c, 2) > cbAvg - offset) && (imy(r,c, 2) < cbAvg + offset) && (imy(r, c, 3) > crAvg - offset) && (imy(r, c, 3) < crAvg + offset)
-                bw(r,c) = true;
-            else
-                bw(r,c) = false;
-            end
-        end
-    end
+    
+    cbLo = cbAvg - offset;
+    cbHi = cbAvg + offset;
+    crLo = crAvg - offset;
+    crHi = crAvg + offset;
+    imCb = imy(:,:,2);
+    imCr = imy(:,:,3);
+    bwCbLo = im2bw(imCb,cbLo/256);
+    bwCbHi = im2bw(imCb,cbHi/256);
+    bwCrLo = im2bw(imCr,crLo/256);
+    bwCrHi = im2bw(imCr,crHi/256);
+    
+    bwCb = bwCbLo & ~bwCbHi;
+    bwCr = bwCrLo & ~bwCrHi;
+    
+    bw = bwCb & bwCr;
     filt = ones(7,7)/49;
     bwf = imfilter(bw,filt);
     for i = 1:5
@@ -32,7 +32,7 @@ function [bwf img ccObjs centDat] = findCups(vid, cbAvg, crAvg)
     end
     cc = bwconncomp(bwf,4);
 
-    ccObjs = cc.NumObjects
+    ccObjs = cc.NumObjects;
 
     centDat = regionprops(cc, 'all');
     
