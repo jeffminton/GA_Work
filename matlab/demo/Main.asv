@@ -115,7 +115,7 @@ end
        centered = false;
        centered = Center(newdat, robot);
        disp(centered)
-    while centered == false
+    while centered == false,
          frame=getsnapshot(vid);
          imshow(frame);   
          [newdat, unused] = linesdemo(frame);
@@ -124,7 +124,7 @@ end
  %   if centered
  tmc =1;
     There = MoveTo(newdat, robot)
-    while There == false && tmc < 9
+    while There == false && tmc < 9;
        frame=getsnapshot(vid);
        imshow(frame);   
        [newdat, unused] = linesdemo(frame);
@@ -137,7 +137,7 @@ end
 NorthEast = There;
  
 % start southheast
- if NorthWest == true && NorthEast == true
+ if NorthWest == true && NorthEast == true,
     disp(' Found NW & NE - rotating 70 degrees CW ')
     %rotate cheat
  %   robot.rotate(-1.6)
@@ -147,7 +147,7 @@ NorthEast = There;
     robot.rotate(.5)
     NumberOfLines = 0;
     cnt = 1;
-    while NumberOfLines ~= 2 && cnt < 10
+    while NumberOfLines ~= 2 && cnt < 10,
 %   keep rotating
     robot.rotate(-0.2)
     frame=getsnapshot(vid);
@@ -158,7 +158,7 @@ NorthEast = There;
     cnt = cnt+1;
     end
     
-    if NumberOfLines == 2
+    if NumberOfLines == 2,
        SouthEast = false;
        There = false;
        centered = false;
@@ -186,7 +186,7 @@ NorthEast = There;
 SouthEast = There;   
 
 % start southhwest
- if SouthEast == true
+ if SouthEast == true,
     disp(' Found SW - rotating 70 degrees CW ')
     %rotate cheat
 %  robot.rotate(-1.6)
@@ -196,7 +196,7 @@ SouthEast = There;
     robot.rotate(.5)
     NumberOfLines = 0;
     cnt = 1;
-    while NumberOfLines ~= 2 && cnt < 10
+    while NumberOfLines ~= 2 && cnt < 10,
 %   keep rotating
     robot.rotate(-0.2)
     frame=getsnapshot(vid);
@@ -207,13 +207,13 @@ SouthEast = There;
     cnt = cnt+1;
     end
     
-    if NumberOfLines == 2
+    if NumberOfLines == 2,
        SouthWest = false;
        There = false;
        centered = false;
        centered = Center(newdat, robot);
        disp(centered)
-    while centered == false
+    while centered == false,
          frame=getsnapshot(vid);
          imshow(frame);   
          [newdat, unused] = linesdemo(frame);
@@ -222,7 +222,7 @@ SouthEast = There;
  %   if centered
  tmc =1;
     There = MoveTo(newdat, robot)
-    while There == false && tmc < 9
+    while There == false && tmc < 9;
        frame=getsnapshot(vid);
        imshow(frame);   
        [newdat, unused] = linesdemo(frame);

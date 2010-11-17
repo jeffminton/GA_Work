@@ -5,7 +5,7 @@ function [bwf img ccObjs centDat] = findCups(vid, cbAvg, crAvg)
     pause(.1);
     img = getsnapshot(vid);
 
-    offset = 10;
+    offset = 13;
     img = img(190:end,:,:);
     
     imy = rgb2ycbcr(img);

@@ -1,10 +1,10 @@
 
-function [newdat NumberOfLines] = linesdemo()
+function [newdat NumberOfLines] = linesdemo(vid)
 
-    info = imaqhwinfo('winvideo')
-    devinfo = imaqhwinfo('winvideo',1);
-    devinfo = imaqhwinfo('winvideo',1)
-    vid = videoinput('winvideo',1,'RGB24_640x480')
+%     info = imaqhwinfo('winvideo')
+%     devinfo = imaqhwinfo('winvideo',1);
+%     devinfo = imaqhwinfo('winvideo',1)
+%     vid = videoinput('winvideo',1,'RGB24_640x480')
 %     cmap = colormap;
 %     cmap=brighten(cmap,1);
 %     colormap(cmap);   %brighten image
