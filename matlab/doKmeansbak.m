@@ -1,32 +1,31 @@
-function [segment_masks, imgGray] = doKmeans(img, nColors)
+function [segment_masks, cluster_idx] = doKmeans(img)
 
 cform = makecform('srgb2lab');
 
-imgGray = rgb2gray(img);
-imgBW = im2bw(imgGray, .5);
-white = or(imgBW, ~imgBW);
+[y, x, z] = size(img);
+white = ones(y, x);
+imshow(white);
 
 imgLAB = applycform(img, cform);
 ab = double(imgLAB(:,:,2:3));
 nrows = size(ab, 1);
 ncols = size(ab, 2);
 ab = reshape(ab, nrows * ncols, 2);
-[cluster_idx cluster_centers] = kmeans(ab, nColors);
-% [cluster_idx] = litekmeans(ab, nColors);
+nColors = 5;
+% [cluster_idx] = kmeans(ab, nColors, 'distance','sqEuclidean', 'Replicates', 2);
+[cluster_idx] = litekmeans(ab, nColors);
+size(cluster_idx)
 pixel_labels = reshape(cluster_idx, nrows, ncols);
 segment_masks = cell(1, nColors);
-
-scale = 255 / nColors;
-
-for i = 1 : nColors
-    imgGray(pixel_labels == i) = i * scale;
-end
 
 for k = 1:nColors
     mask = white;
     mask(pixel_labels ~= k) = 0;
     filt = ones(7,7)/49;
     maskFilt = imfilter(mask, filt);
+    for i = 1:5
+        maskFilt = imfilter(maskFilt,filt);
+    end
     segment_masks{k} = maskFilt;
 end
 

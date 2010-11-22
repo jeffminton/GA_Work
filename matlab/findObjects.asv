@@ -1,0 +1,22 @@
+function [edges] = findObjects(img)
+
+imgBak = img;
+segments = 6;
+
+imwrite(img, 'imgout/segOrig.jpg');
+
+[segment_masks gray] = segmentImage(img, segments);
+
+imwrite(gray, 'imgout/segGray.jpg');
+
+edges = segment_masks;
+
+for i = 1:size(segment_masks, 2)
+    segImg = imgBak;
+    segImg(segment_masks{i} == 0) = 0;
+    imwrite(segImg, ['imgout/segColor', i, '.jpg']);
+    edges{i} = edge(segment_masks{i});
+    imwrite(edges{i}, ['imgout/edges', i, '.jpg']);
+    imwrite(segment_masks{i}, ['imgout/segMasks', i, '.jpg']);
+    figure, imshow(edges{i}), title(['edges ', num2str(i)]);
+end
