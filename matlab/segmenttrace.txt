@@ -1,5 +1,0 @@
-EDU>> img = imread('imgout\segOrig.jpg');
-EDU>> 
-EDU>> [edges] = findObjects(img);
-EDU>> 
-EDU>> 
